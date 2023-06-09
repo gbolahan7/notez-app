@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import Button from "./components/Button";
 import Input from "./components/Input";
 import Header from "./components/Header";
+import Card from "./components/card/Card";
 
 interface InputValue {
   queryString: string;
@@ -28,6 +29,7 @@ function App() {
         inputValue={inputValue.queryString}
         handleInputChange={handleInputChange}
       ></Header>
+      <Card></Card>
     </div>
   );
 }
