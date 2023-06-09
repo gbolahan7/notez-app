@@ -1,8 +1,15 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import Button from "./Button";
 import Input from "./Input";
 
-function Header() {
+interface Props {
+  inputValue: string;
+  handleInputChange: (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void; //listening to change events
+}
+
+function Header({ inputValue, handleInputChange }: Props) {
   return (
     <section className="flex items-center justify-between">
       <Button
@@ -17,10 +24,10 @@ function Header() {
       <div className="w-[280px]">
         <Input
           inputControl="search-bar"
-          name="search"
+          name="queryString"
           placeholder="Search"
-          value=""
-          onChange={() => {}}
+          value={inputValue}
+          onChange={handleInputChange}
         ></Input>
       </div>
     </section>
