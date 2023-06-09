@@ -5,7 +5,9 @@ interface Props {
   inputControl: "search-bar" | "text-field";
   value: string;
   name: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
   placeholder: string;
   type?: string;
 }
@@ -34,8 +36,13 @@ function Input({
           />
         </div>
       ) : (
-        <div>
-          <textarea placeholder={placeholder}></textarea>
+        <div className="px-6 pt-[31px] rounded-lg">
+          <textarea
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            name={name}
+          ></textarea>
         </div>
       )}
     </div>
