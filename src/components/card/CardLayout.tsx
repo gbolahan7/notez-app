@@ -20,7 +20,7 @@ function CardLayout() {
     // <div className="flex gap-6 flex-wrap items-center justify-center w-full ">
     <div className=" w-full [ card-layout ] ">
       {cardData.map((card, index) => (
-        <div className="w-[180px]" key={index + card.id}>
+        <div className="w-full" key={index + card.id}>
           <Card
             cardTitle={card.cardTitle}
             cardBody={card.cardBody}

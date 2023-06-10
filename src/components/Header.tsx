@@ -7,16 +7,17 @@ interface Props {
   handleInputChange: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void; //listening to change events
+  setNewNote: (value: boolean) => void;
 }
 
-function Header({ inputValue, handleInputChange }: Props) {
+function Header({ inputValue, handleInputChange, setNewNote }: Props) {
   return (
     <section className="flex items-center justify-between">
       <Button
         btnVariant="primary"
         size="large"
         text="new note"
-        onClick={() => {}}
+        onClick={() => setNewNote(true)}
       ></Button>
       <h1 className="text-[55px] font-bold leading-[67px] -tracking-(0.08em) text-black">
         notez
