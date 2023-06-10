@@ -22,7 +22,7 @@ const NewNote = ({ setNewNote, inputValue, handleInputChange }: Props) => {
           name="textString"
           placeholder="Start typing here..."
           value={inputValue}
-          onChange={() => handleInputChange}
+          onChange={handleInputChange}
         />
       </form>
       <div className="flex gap-4 justify-end">

@@ -36,8 +36,9 @@ function Input({
           />
         </div>
       ) : (
-        <div className="px-6 pt-[31px] rounded-lg">
+        <div>
           <textarea
+            className="w-full h-[392px] outline-none"
             placeholder={placeholder}
             value={value}
             onChange={onChange}
