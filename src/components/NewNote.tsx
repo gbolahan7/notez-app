@@ -1,6 +1,7 @@
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react";
 import Button from "./Button";
 import Input from "./Input";
+import { InputValue } from "./Layout";
 
 interface Props {
   noteTitleValue: string;
@@ -10,6 +11,7 @@ interface Props {
   ) => void; //listening to change events
   setNewNote: (value: boolean) => void;
   handleAddNote: (event: FormEvent<HTMLElement>) => void;
+  setInputValue: Dispatch<SetStateAction<InputValue>>;
 }
 
 const NewNote = ({
@@ -18,6 +20,7 @@ const NewNote = ({
   handleInputChange,
   noteTitleValue,
   handleAddNote,
+  setInputValue,
 }: Props) => {
   return (
     <div className="w-full flex flex-col">
@@ -57,7 +60,14 @@ const NewNote = ({
             text="cancel"
             btnVariant="secondary"
             size="medium"
-            onClick={() => setNewNote(false)}
+            onClick={() => {
+              setNewNote(false);
+              setInputValue((prevState) => ({
+                ...prevState,
+                noteTitle: "",
+                noteBody: "",
+              }));
+            }}
           />
         </div>
       </form>

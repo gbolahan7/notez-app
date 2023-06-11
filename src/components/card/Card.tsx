@@ -18,7 +18,7 @@ function Card({ cardTitle, cardBody, createdAt, setNewNote }: Props) {
 
   const createdAtDate = formatDateTime(createdAt);
   return (
-    <div className="bg-white rounded-md shadow-lg pt-[22px] pb-2 pl-4 pr-5 flex flex-col w-full relative">
+    <div className="bg-white rounded-md shadow-lg pt-[22px] pb-2 pl-4 pr-5 flex flex-col w-full relative h-[180px]">
       <div className="flex items-center gap-1 self-end mb-5">
         <FaExpandAlt className={iconStyle} onClick={() => setNewNote(true)} />
         <FaTrashAlt

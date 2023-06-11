@@ -18,7 +18,7 @@ interface Props {
 
 function CardLayout({ setNewNote, notes, newNote }: Props) {
   return (
-    <div className="relative">
+    <div className="relative h-full">
       {notes.length > 0 ? (
         <div className=" w-full [ card-layout ] ">
           {notes.map((note) => (

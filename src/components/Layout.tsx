@@ -5,7 +5,7 @@ import clsx from "clsx";
 import Header from "./Header";
 import { truncateText } from "./util";
 
-interface InputValue {
+export interface InputValue {
   queryString: string;
   noteTitle: string;
   noteBody: string;
@@ -55,6 +55,13 @@ const Layout = () => {
       notePreview: truncateText(inputValue.noteBody, 20),
     };
 
+    // clearing out the text area after saving note
+    setInputVaue((prevState) => ({
+      ...prevState,
+      noteTitle: "",
+      noteBody: "",
+    }));
+
     setNotes((prevState) => [...prevState, noteData]);
   };
   return (
@@ -84,6 +91,7 @@ const Layout = () => {
               noteTitleValue={inputValue.noteTitle}
               handleInputChange={handleInputChange}
               handleAddNote={handleAddNote}
+              setInputValue={setInputVaue}
             />
           </div>
         )}
