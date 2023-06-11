@@ -31,6 +31,7 @@ export interface LayoutProvider {
   newNote: boolean;
   inputValue: InputValue;
   setInputValue: Dispatch<SetStateAction<InputValue>>;
+  setNotes: Dispatch<SetStateAction<Note[]>>;
   setNewNote: (value: boolean) => void;
   handleAddNote: (event: FormEvent<HTMLElement>) => void;
   handleInputChange: (
@@ -94,6 +95,7 @@ const Layout = () => {
     setInputValue: setInputValue,
     setNewNote: setNewNote,
     notes: notes,
+    setNotes: setNotes,
   };
   return (
     <LayoutContext.Provider value={layoutContextProvider}>

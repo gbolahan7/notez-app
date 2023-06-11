@@ -3,13 +3,6 @@ import Card from "./Card";
 import { LayoutContext, LayoutProvider, Note } from "../Layout";
 import clsx from "clsx";
 
-// interface Card {
-//   cardTitle: string;
-//   cardBody: string;
-//   cardDate: string;
-//   id: number;
-// }
-
 interface Props {
   setNewNote: (value: boolean) => void;
   newNote: boolean;
@@ -17,9 +10,7 @@ interface Props {
 }
 
 function CardLayout() {
-  const { setNewNote, notes, newNote } = useContext(
-    LayoutContext
-  ) as LayoutProvider;
+  const { notes, newNote } = useContext(LayoutContext) as LayoutProvider;
 
   return (
     <div className="relative h-full">
@@ -27,7 +18,7 @@ function CardLayout() {
         <div className=" w-full [ card-layout ] ">
           {notes.map((note) => (
             <div className="w-full" key={note.id}>
-              <Card note={note} setNewNote={setNewNote} />
+              <Card note={note} />
             </div>
           ))}
         </div>

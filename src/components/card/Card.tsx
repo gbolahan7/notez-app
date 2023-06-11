@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaExpandAlt, FaTrashAlt } from "react-icons/fa";
 import Button from "../Button";
 import clsx from "clsx";
 import { formatDateTime } from "../util";
-import { Note } from "../Layout";
+import { LayoutContext, LayoutProvider, Note } from "../Layout";
 
 interface Props {
   note: Note;
-  setNewNote: (value: boolean) => void;
 }
 
-function Card({ note, setNewNote }: Props) {
+function Card({ note }: Props) {
+  const { setNotes, setNewNote } = useContext(LayoutContext) as LayoutProvider;
   const [confirmation, setConfirmation] = useState(false);
   const [noteId, setNoteId] = useState("");
 
@@ -19,6 +19,12 @@ function Card({ note, setNewNote }: Props) {
     "fill-notez-grey-100 hover:fill-notez-yellow-200 cursor-pointer flex flex-col";
 
   const createdAtDate = formatDateTime(createdAt);
+
+  const handleDeleteNote = (noteId: string) => {
+    setNotes((currentState) =>
+      currentState.filter((note) => note.id !== noteId)
+    );
+  };
   return (
     <div className="bg-white rounded-md shadow-lg pt-[22px] pb-2 pl-4 pr-5 flex flex-col w-full relative h-[180px]">
       <div className="flex items-center gap-1 self-end mb-5">
@@ -53,7 +59,7 @@ function Card({ note, setNewNote }: Props) {
               text="yes"
               btnVariant="primary"
               size="small"
-              onClick={() => console.log("Delete this")}
+              onClick={() => handleDeleteNote(noteId)}
             />
             <Button
               text="no"
