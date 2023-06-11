@@ -118,6 +118,7 @@ const Layout = () => {
         const noteIndex = prevState.findIndex((note) => note.id === id);
         prevState[noteIndex].noteTitle = noteTitle;
         prevState[noteIndex].noteBody = noteBody;
+        prevState[noteIndex].notePreview = truncateText(noteBody, 20);
 
         return [...prevState];
       }
@@ -162,15 +163,15 @@ const Layout = () => {
   const isCreateNoteOpen = createNote || editNote.isEdit;
   return (
     <LayoutContext.Provider value={layoutContextProvider}>
-      <section className="w-full py-[61px] px-[67px] flex flex-col">
-        <div className="mb-[77px]">
+      <section className="w-full py-[25px] px-[30px] flex flex-col md:px-[67px] md:py-[61px]">
+        <div className={clsx(isCreateNoteOpen ? "mb-[56px]" : "mb-[77px]")}>
           <Header />
         </div>
         <div className="relative flex gap-8">
           <div
             className={clsx(
               "transition-all",
-              isCreateNoteOpen ? "w-1/2" : "w-full"
+              isCreateNoteOpen ? "hidden md:w-1/2 md:block" : "w-full"
             )}
           >
             {createNote && (
@@ -182,7 +183,7 @@ const Layout = () => {
           </div>
 
           {isCreateNoteOpen && (
-            <div className="w-1/2 transition-all">
+            <div className="w-full transition-all md:w-1/2">
               <NewNote />
             </div>
           )}

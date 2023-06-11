@@ -10,7 +10,14 @@ interface Props {
 }
 
 function CardLayout() {
-  const { notes, createNote } = useContext(LayoutContext) as LayoutProvider;
+  const { notes, createNote, inputValue } = useContext(
+    LayoutContext
+  ) as LayoutProvider;
+
+  const emptyNoteText =
+    inputValue.queryString !== ""
+      ? "No Match!"
+      : "No note found, please add a new note.";
 
   return (
     <div className="relative h-full">
@@ -29,7 +36,7 @@ function CardLayout() {
             createNote ? "text-left" : "text-center"
           )}
         >
-          No note found, please add a new Note.
+          {emptyNoteText}
         </h1>
       )}
     </div>

@@ -27,8 +27,7 @@ html {
   margin: 0 auto;
   scroll-behavior: smooth;
   overflow-x: hidden;
-  background: linear-gradient(to bottom, var(--notez-yellow-100) 35%,
-  white 35%, white 30%);
+ background: linear-gradient(to bottom, var(--notez-yellow-100) 281px, white 30%, white 35%);
  background-attachment: fixed;
 }
 
@@ -41,6 +40,20 @@ body {
 
 .card-layout {
   display: grid;
-  gap:32px;
-  grid-template-columns: repeat(auto-fit,180px);
+  gap:16px;
+  grid-template-columns: repeat(auto-fit,100%);
+}
+
+@media only screen and (min-width: 500px) {
+  .card-layout {
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .card-layout {
+    gap: 32px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
 }

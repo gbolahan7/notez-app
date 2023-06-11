@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import Button from "./Button";
 import Input from "./Input";
-import Layout, { LayoutContext, LayoutProvider } from "./Layout";
+import { LayoutContext, LayoutProvider } from "./Layout";
 
 function Header() {
   const { inputValue, setCreateNote, handleInputChange } = useContext(
@@ -9,14 +9,14 @@ function Header() {
   ) as LayoutProvider;
 
   return (
-    <section className="flex items-center justify-between">
+    <section className="flex flex-col items-center flex-wrap gap-2 md:items-center md:flex-row md:justify-between">
       <Button
         btnVariant="primary"
         size="large"
         text="new note"
         onClick={() => setCreateNote(true)}
-      ></Button>
-      <h1 className="text-[55px] font-bold leading-[67px] -tracking-(0.08em) text-black">
+      />
+      <h1 className="text-[55px] font-bold leading-[67px] -tracking-[0.08em] text-black order-first md:order-none">
         notez
       </h1>
       <div className="w-[280px]">
@@ -26,7 +26,7 @@ function Header() {
           placeholder="Search"
           value={inputValue.queryString}
           onChange={handleInputChange}
-        ></Input>
+        />
       </div>
     </section>
   );
