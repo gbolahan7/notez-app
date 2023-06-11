@@ -39,7 +39,7 @@ const Layout = () => {
               Saved notes
             </h1>
           )}
-          <CardLayout />
+          <CardLayout setNewNote={setNewNote} />
         </div>
 
         {newNote && (

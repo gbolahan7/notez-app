@@ -8,7 +8,11 @@ interface Card {
   id: number;
 }
 
-function CardLayout() {
+interface Props {
+  setNewNote: (value: boolean) => void;
+}
+
+function CardLayout({ setNewNote }: Props) {
   const cardObject: Card = {
     id: 1,
     cardTitle: "Shopping List",
@@ -25,6 +29,7 @@ function CardLayout() {
             cardTitle={card.cardTitle}
             cardBody={card.cardBody}
             cardDate={card.cardDate}
+            setNewNote={setNewNote}
           />
         </div>
       ))}
