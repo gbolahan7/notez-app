@@ -1,8 +1,7 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { FaExpandAlt, FaTrashAlt } from "react-icons/fa";
 import Button from "../Button";
 import clsx from "clsx";
-import { formatDateTime } from "../util";
 import { LayoutContext, LayoutProvider, Note } from "../Layout";
 
 interface Props {
@@ -10,7 +9,7 @@ interface Props {
 }
 
 function Card({ note }: Props) {
-  const { setNotes, setCreateNote, setEditNote, setInputValue } = useContext(
+  const { setNotes, setEditNote, setInputValue } = useContext(
     LayoutContext
   ) as LayoutProvider;
   const [confirmation, setConfirmation] = useState(false);
@@ -80,7 +79,6 @@ function Card({ note }: Props) {
               onClick={() => setConfirmation(false)}
             />
           </div>
-           
         </div>
       )}
     </div>

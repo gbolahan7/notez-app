@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 import { FaSearch } from "react-icons/fa";
 
 interface Props {

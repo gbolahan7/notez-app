@@ -1,13 +1,7 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import Card from "./Card";
-import { LayoutContext, LayoutProvider, Note } from "../Layout";
+import { LayoutContext, LayoutProvider } from "../Layout";
 import clsx from "clsx";
-
-interface Props {
-  setCreateNote: (value: boolean) => void;
-  newNote: boolean;
-  notes: Note[];
-}
 
 function CardLayout() {
   const { notes, createNote, inputValue } = useContext(
@@ -40,7 +34,6 @@ function CardLayout() {
         </h1>
       )}
     </div>
-    // <div className="flex gap-6 flex-wrap items-center justify-center w-full ">
   );
 }
 
