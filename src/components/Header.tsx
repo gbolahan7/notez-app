@@ -1,16 +1,13 @@
-import React, { ChangeEvent } from "react";
+import React, { useContext } from "react";
 import Button from "./Button";
 import Input from "./Input";
+import Layout, { LayoutContext, LayoutProvider } from "./Layout";
 
-interface Props {
-  inputValue: string;
-  handleInputChange: (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void; //listening to change events
-  setNewNote: (value: boolean) => void;
-}
+function Header() {
+  const { inputValue, setNewNote, handleInputChange } = useContext(
+    LayoutContext
+  ) as LayoutProvider;
 
-function Header({ inputValue, handleInputChange, setNewNote }: Props) {
   return (
     <section className="flex items-center justify-between">
       <Button
@@ -27,7 +24,7 @@ function Header({ inputValue, handleInputChange, setNewNote }: Props) {
           inputControl="search-bar"
           name="queryString"
           placeholder="Search"
-          value={inputValue}
+          value={inputValue.queryString}
           onChange={handleInputChange}
         ></Input>
       </div>

@@ -1,4 +1,11 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  createContext,
+  useState,
+} from "react";
 import CardLayout from "./card/CardLayout";
 import NewNote from "./NewNote";
 import clsx from "clsx";
@@ -18,8 +25,22 @@ export interface Note {
   createdAt: Date | number;
   notePreview: string;
 }
+
+export interface LayoutProvider {
+  notes: Note[];
+  newNote: boolean;
+  inputValue: InputValue;
+  setInputValue: Dispatch<SetStateAction<InputValue>>;
+  setNewNote: (value: boolean) => void;
+  handleAddNote: (event: FormEvent<HTMLElement>) => void;
+  handleInputChange: (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+}
+
+export const LayoutContext = createContext<LayoutProvider | null>(null);
 const Layout = () => {
-  const [inputValue, setInputVaue] = useState<InputValue>({
+  const [inputValue, setInputValue] = useState<InputValue>({
     queryString: "",
     noteBody: "",
     noteTitle: " ",
@@ -31,7 +52,7 @@ const Layout = () => {
   ) => {
     const { name, value } = event.target;
 
-    setInputVaue((prevState) => ({ ...prevState, [name]: value }));
+    setInputValue((prevState) => ({ ...prevState, [name]: value }));
   };
   const handleAddNote = (event: FormEvent<HTMLElement>) => {
     event.preventDefault();
@@ -56,7 +77,7 @@ const Layout = () => {
     };
 
     // clearing out the text area after saving note
-    setInputVaue((prevState) => ({
+    setInputValue((prevState) => ({
       ...prevState,
       noteTitle: "",
       noteBody: "",
@@ -64,39 +85,40 @@ const Layout = () => {
 
     setNotes((prevState) => [...prevState, noteData]);
   };
-  return (
-    <section className="w-full py-[61px] px-[67px] flex flex-col">
-      <div className="mb-[77px]">
-        <Header
-          inputValue={inputValue.queryString}
-          handleInputChange={handleInputChange}
-          setNewNote={setNewNote}
-        />
-      </div>
-      <div className="relative flex gap-8">
-        <div className={clsx("transition-all", newNote ? "w-1/2" : "w-full")}>
-          {newNote && (
-            <h1 className="text-[22px] leading-[27px] mb-[27px] text-black font-bold">
-              Saved notes
-            </h1>
-          )}
-          <CardLayout setNewNote={setNewNote} notes={notes} newNote={newNote} />
-        </div>
 
-        {newNote && (
-          <div className="w-1/2 transition-all">
-            <NewNote
-              setNewNote={setNewNote}
-              noteBodyValue={inputValue.noteBody}
-              noteTitleValue={inputValue.noteTitle}
-              handleInputChange={handleInputChange}
-              handleAddNote={handleAddNote}
-              setInputValue={setInputVaue}
-            />
+  const layoutContextProvider = {
+    handleInputChange: handleInputChange,
+    handleAddNote: handleAddNote,
+    inputValue: inputValue,
+    newNote: newNote,
+    setInputValue: setInputValue,
+    setNewNote: setNewNote,
+    notes: notes,
+  };
+  return (
+    <LayoutContext.Provider value={layoutContextProvider}>
+      <section className="w-full py-[61px] px-[67px] flex flex-col">
+        <div className="mb-[77px]">
+          <Header />
+        </div>
+        <div className="relative flex gap-8">
+          <div className={clsx("transition-all", newNote ? "w-1/2" : "w-full")}>
+            {newNote && (
+              <h1 className="text-[22px] leading-[27px] mb-[27px] text-black font-bold">
+                Saved notes
+              </h1>
+            )}
+            <CardLayout />
           </div>
-        )}
-      </div>
-    </section>
+
+          {newNote && (
+            <div className="w-1/2 transition-all">
+              <NewNote />
+            </div>
+          )}
+        </div>
+      </section>
+    </LayoutContext.Provider>
   );
 };
 

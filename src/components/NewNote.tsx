@@ -1,27 +1,16 @@
-import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react";
+import { useContext } from "react";
 import Button from "./Button";
 import Input from "./Input";
-import { InputValue } from "./Layout";
+import { LayoutContext, LayoutProvider } from "./Layout";
 
-interface Props {
-  noteTitleValue: string;
-  noteBodyValue: string;
-  handleInputChange: (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void; //listening to change events
-  setNewNote: (value: boolean) => void;
-  handleAddNote: (event: FormEvent<HTMLElement>) => void;
-  setInputValue: Dispatch<SetStateAction<InputValue>>;
-}
-
-const NewNote = ({
-  setNewNote,
-  noteBodyValue,
-  handleInputChange,
-  noteTitleValue,
-  handleAddNote,
-  setInputValue,
-}: Props) => {
+const NewNote = () => {
+  const {
+    setNewNote,
+    handleInputChange,
+    handleAddNote,
+    inputValue,
+    setInputValue,
+  } = useContext(LayoutContext) as LayoutProvider;
   return (
     <div className="w-full flex flex-col">
       <h1 className="text-[22px] leading-[27px] text-black font-bold mb-[27px]">
@@ -34,7 +23,7 @@ const NewNote = ({
               inputControl="input-field"
               name="noteTitle"
               placeholder="Enter title"
-              value={noteTitleValue}
+              value={inputValue.noteTitle}
               onChange={handleInputChange}
             />
           </div>
@@ -43,7 +32,7 @@ const NewNote = ({
               inputControl="text-field"
               name="noteBody"
               placeholder="Start typing here..."
-              value={noteBodyValue}
+              value={inputValue.noteBody}
               onChange={handleInputChange}
             />
           </div>

@@ -3,16 +3,18 @@ import { FaExpandAlt, FaTrashAlt } from "react-icons/fa";
 import Button from "../Button";
 import clsx from "clsx";
 import { formatDateTime } from "../util";
+import { Note } from "../Layout";
 
 interface Props {
-  cardTitle: string;
-  cardBody: string;
-  createdAt: Date | number;
+  note: Note;
   setNewNote: (value: boolean) => void;
 }
 
-function Card({ cardTitle, cardBody, createdAt, setNewNote }: Props) {
+function Card({ note, setNewNote }: Props) {
   const [confirmation, setConfirmation] = useState(false);
+  const [noteId, setNoteId] = useState("");
+
+  const { createdAt, noteTitle, notePreview, id } = note;
   const iconStyle =
     "fill-notez-grey-100 hover:fill-notez-yellow-200 cursor-pointer flex flex-col";
 
@@ -23,15 +25,20 @@ function Card({ cardTitle, cardBody, createdAt, setNewNote }: Props) {
         <FaExpandAlt className={iconStyle} onClick={() => setNewNote(true)} />
         <FaTrashAlt
           className={iconStyle}
-          onClick={() => setConfirmation(true)}
+          onClick={() => {
+            setConfirmation(true);
+            setNoteId(id);
+          }}
         />
       </div>
-      <h2 className="text-lg font-bold leading-[22px] mb-[7px]">{cardTitle}</h2>
-      <p className="text-sm leading-[17px] text-notez-grey-100">{cardBody}</p>
-      <p className="text-[10px] leading-3 text-notez-grey-100 mt-[26px]">
+      <h2 className="text-lg font-bold leading-[22px] mb-[7px]">{noteTitle}</h2>
+      <p className="text-sm leading-[17px] text-notez-grey-100">
+        {notePreview}
+      </p>
+      <p className="text-[10px] leading-3 text-notez-grey-100 mt-auto">
         {createdAtDate}
       </p>
-      {confirmation && (
+      {confirmation && noteId === id && (
         <div
           className={clsx(
             "bg-notez-yellow-100 pt-5 pb-4 rounded-md flex flex-col items-center w-full h-full absolute top-0 left-0 z-10 transition-transform",
@@ -52,7 +59,7 @@ function Card({ cardTitle, cardBody, createdAt, setNewNote }: Props) {
               text="no"
               btnVariant="secondary"
               size="small"
-              onClick={() => console.log("Delete Cancelled")}
+              onClick={() => setConfirmation(false)}
             />
           </div>
            

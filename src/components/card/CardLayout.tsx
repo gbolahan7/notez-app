@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import Card from "./Card";
-import type { Note } from "../Layout";
+import { LayoutContext, LayoutProvider, Note } from "../Layout";
 import clsx from "clsx";
 
 // interface Card {
@@ -16,19 +16,18 @@ interface Props {
   notes: Note[];
 }
 
-function CardLayout({ setNewNote, notes, newNote }: Props) {
+function CardLayout() {
+  const { setNewNote, notes, newNote } = useContext(
+    LayoutContext
+  ) as LayoutProvider;
+
   return (
     <div className="relative h-full">
       {notes.length > 0 ? (
         <div className=" w-full [ card-layout ] ">
           {notes.map((note) => (
             <div className="w-full" key={note.id}>
-              <Card
-                cardTitle={note.noteTitle}
-                cardBody={note.notePreview}
-                createdAt={note.createdAt}
-                setNewNote={setNewNote}
-              />
+              <Card note={note} setNewNote={setNewNote} />
             </div>
           ))}
         </div>
