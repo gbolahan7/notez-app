@@ -6,15 +6,25 @@ import Header from "./Header";
 
 interface InputValue {
   queryString: string;
-  textString: string;
+  noteTitleValue: string;
+  noteBodyValue: string;
 }
 
+export interface Note {
+  id: number;
+  noteTitle: string;
+  noteBody: string;
+  noteDate: string;
+  notePreview: string;
+}
 const Layout = () => {
   const [inputValue, setInputVaue] = useState<InputValue>({
     queryString: "",
-    textString: "",
+    noteBodyValue: "",
+    noteTitleValue: " ",
   });
   const [newNote, setNewNote] = useState(false);
+  const [notes, setNotes] = useState<Note[]>([]); //managing the state of an array of notes
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -39,14 +49,15 @@ const Layout = () => {
               Saved notes
             </h1>
           )}
-          <CardLayout setNewNote={setNewNote} />
+          <CardLayout setNewNote={setNewNote} notes={notes} newNote={newNote} />
         </div>
 
         {newNote && (
           <div className="w-1/2 transition-all">
             <NewNote
               setNewNote={setNewNote}
-              inputValue={inputValue.textString}
+              noteBodyValue={inputValue.noteBodyValue}
+              noteTitleValue={inputValue.noteTitleValue}
               handleInputChange={handleInputChange}
             />
           </div>

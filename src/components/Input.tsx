@@ -1,8 +1,9 @@
+import clsx from "clsx";
 import React, { ChangeEvent } from "react";
 import { FaSearch } from "react-icons/fa";
 
 interface Props {
-  inputControl: "search-bar" | "text-field";
+  inputControl: "search-bar" | "text-field" | "input-field";
   value: string;
   name: string;
   onChange: (
@@ -20,18 +21,30 @@ function Input({
   placeholder,
   type,
 }: Props) {
+  const isInput =
+    inputControl === "search-bar" || inputControl === "input-field";
   return (
     <div>
-      {inputControl === "search-bar" ? (
-        <div className="flex items-center gap-4 bg-white rounded-full pl-[21px] py-[10px] w-full">
-          <FaSearch className="text-black" />
+      {isInput ? (
+        <div
+          className={clsx(
+            "flex items-center gap-4 bg-white pl-[21px] py-[10px] w-full",
+            inputControl === "search-bar"
+              ? "rounded-full"
+              : "rounded-lg shadow-2xl"
+          )}
+        >
+          {inputControl === "search-bar" && <FaSearch className="text-black" />}
           <input
             type={type}
             name={name}
             value={value}
             placeholder={placeholder}
             onChange={onChange}
-            className="w-full rounded-full outline-none border-none"
+            className={clsx(
+              "w-full outline-none border-none",
+              inputControl === "search-bar" ? "rounded-full" : "rounded-lg"
+            )}
             autoComplete="off"
           />
         </div>

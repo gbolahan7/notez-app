@@ -1,5 +1,7 @@
 import React from "react";
 import Card from "./Card";
+import type { Note } from "../Layout";
+import clsx from "clsx";
 
 interface Card {
   cardTitle: string;
@@ -10,30 +12,38 @@ interface Card {
 
 interface Props {
   setNewNote: (value: boolean) => void;
+  newNote: boolean;
+  notes: Note[];
 }
 
-function CardLayout({ setNewNote }: Props) {
-  const cardObject: Card = {
-    id: 1,
-    cardTitle: "Shopping List",
-    cardBody: "Dear Judith, I hoope this email finds you well...",
-    cardDate: "April 14th, 2023",
-  };
-  const cardData: Card[] = Array(20).fill(cardObject);
+function CardLayout({ setNewNote, notes, newNote }: Props) {
   return (
-    // <div className="flex gap-6 flex-wrap items-center justify-center w-full ">
-    <div className=" w-full [ card-layout ] ">
-      {cardData.map((card, index) => (
-        <div className="w-full" key={index + card.id}>
-          <Card
-            cardTitle={card.cardTitle}
-            cardBody={card.cardBody}
-            cardDate={card.cardDate}
-            setNewNote={setNewNote}
-          />
+    <div className="relative">
+      {notes.length > 0 ? (
+        <div className=" w-full [ card-layout ] ">
+          {notes.map((note) => (
+            <div className="w-full" key={note.id}>
+              <Card
+                cardTitle={note.noteTitle}
+                cardBody={note.notePreview}
+                cardDate={note.noteDate}
+                setNewNote={setNewNote}
+              />
+            </div>
+          ))}
         </div>
-      ))}
+      ) : (
+        <h1
+          className={clsx(
+            "text-lg text-black font-normal",
+            newNote ? "text-left" : "text-center"
+          )}
+        >
+          No note found, please add a new Note.
+        </h1>
+      )}
     </div>
+    // <div className="flex gap-6 flex-wrap items-center justify-center w-full ">
   );
 }
 
