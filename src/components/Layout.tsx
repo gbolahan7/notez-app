@@ -15,7 +15,7 @@ export interface Note {
   id: string;
   noteTitle: string;
   noteBody: string;
-  createdAt: Date;
+  createdAt: Date | number;
   notePreview: string;
 }
 const Layout = () => {
@@ -51,7 +51,7 @@ const Layout = () => {
       id: Math.random().toString(36).substring(2, 7).toUpperCase(),
       noteTitle: inputValue.noteTitle,
       noteBody: inputValue.noteBody,
-      createdAt: new Date(Date.now()),
+      createdAt: new Date(Date.now()).getTime(),
       notePreview: truncateText(inputValue.noteBody, 20),
     };
 

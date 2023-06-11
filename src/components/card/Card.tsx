@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { FaExpandAlt, FaTrashAlt } from "react-icons/fa";
 import Button from "../Button";
 import clsx from "clsx";
+import { formatDateTime } from "../util";
 
 interface Props {
   cardTitle: string;
   cardBody: string;
-  createdAt: string | Date;
+  createdAt: Date | number;
   setNewNote: (value: boolean) => void;
 }
 
@@ -14,6 +15,8 @@ function Card({ cardTitle, cardBody, createdAt, setNewNote }: Props) {
   const [confirmation, setConfirmation] = useState(false);
   const iconStyle =
     "fill-notez-grey-100 hover:fill-notez-yellow-200 cursor-pointer flex flex-col";
+
+  const createdAtDate = formatDateTime(createdAt);
   return (
     <div className="bg-white rounded-md shadow-lg pt-[22px] pb-2 pl-4 pr-5 flex flex-col w-full relative">
       <div className="flex items-center gap-1 self-end mb-5">
@@ -26,7 +29,7 @@ function Card({ cardTitle, cardBody, createdAt, setNewNote }: Props) {
       <h2 className="text-lg font-bold leading-[22px] mb-[7px]">{cardTitle}</h2>
       <p className="text-sm leading-[17px] text-notez-grey-100">{cardBody}</p>
       <p className="text-[10px] leading-3 text-notez-grey-100 mt-[26px]">
-        {`${createdAt}`}
+        {createdAtDate}
       </p>
       {confirmation && (
         <div

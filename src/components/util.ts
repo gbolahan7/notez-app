@@ -4,6 +4,12 @@ export function truncateText(text: string, num: number): string {
     return text.substring(0, num) + "..."
 }
 
-// export function formatDateTime(date: Date | string): string {
-//     const d = new Intl.DateTimeFormat("en-Gb", {day: ""})
-// }
+export function formatDateTime(date: Date | number | undefined): string {
+    const formattedDate = new Intl.DateTimeFormat("en-Gb",
+        { day: "numeric", 
+        month: "long", year: "numeric", weekday: "short" }).format(
+        date
+    );
+
+    return formattedDate
+}
