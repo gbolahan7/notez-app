@@ -6,7 +6,7 @@ interface Props {
   text: string;
   size: "large" | "medium" | "small";
   btnType?: "submit" | "button";
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Button = ({ btnVariant, text, size, onClick, btnType }: Props) => {

@@ -3,12 +3,12 @@ import Card from "./Card";
 import type { Note } from "../Layout";
 import clsx from "clsx";
 
-interface Card {
-  cardTitle: string;
-  cardBody: string;
-  cardDate: string;
-  id: number;
-}
+// interface Card {
+//   cardTitle: string;
+//   cardBody: string;
+//   cardDate: string;
+//   id: number;
+// }
 
 interface Props {
   setNewNote: (value: boolean) => void;
@@ -26,7 +26,7 @@ function CardLayout({ setNewNote, notes, newNote }: Props) {
               <Card
                 cardTitle={note.noteTitle}
                 cardBody={note.notePreview}
-                cardDate={note.noteDate}
+                createdAt={note.createdAt}
                 setNewNote={setNewNote}
               />
             </div>

@@ -1,27 +1,28 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import CardLayout from "./card/CardLayout";
 import NewNote from "./NewNote";
 import clsx from "clsx";
 import Header from "./Header";
+import { truncateText } from "./util";
 
 interface InputValue {
   queryString: string;
-  noteTitleValue: string;
-  noteBodyValue: string;
+  noteTitle: string;
+  noteBody: string;
 }
 
 export interface Note {
-  id: number;
+  id: string;
   noteTitle: string;
   noteBody: string;
-  noteDate: string;
+  createdAt: Date;
   notePreview: string;
 }
 const Layout = () => {
   const [inputValue, setInputVaue] = useState<InputValue>({
     queryString: "",
-    noteBodyValue: "",
-    noteTitleValue: " ",
+    noteBody: "",
+    noteTitle: " ",
   });
   const [newNote, setNewNote] = useState(false);
   const [notes, setNotes] = useState<Note[]>([]); //managing the state of an array of notes
@@ -32,7 +33,30 @@ const Layout = () => {
 
     setInputVaue((prevState) => ({ ...prevState, [name]: value }));
   };
+  const handleAddNote = (event: FormEvent<HTMLElement>) => {
+    event.preventDefault();
 
+    //getting the form value being submitted
+    const formValue = {
+      noteTitle: inputValue.noteTitle,
+      noteBody: inputValue.noteBody,
+    };
+
+    const isFormValid = Object.values(formValue).every((value) => value !== "");
+
+    if (!isFormValid) return;
+
+    // setting note data
+    const noteData: Note = {
+      id: Math.random().toString(36).substring(2, 7).toUpperCase(),
+      noteTitle: inputValue.noteTitle,
+      noteBody: inputValue.noteBody,
+      createdAt: new Date(Date.now()),
+      notePreview: truncateText(inputValue.noteBody, 20),
+    };
+
+    setNotes((prevState) => [...prevState, noteData]);
+  };
   return (
     <section className="w-full py-[61px] px-[67px] flex flex-col">
       <div className="mb-[77px]">
@@ -56,9 +80,10 @@ const Layout = () => {
           <div className="w-1/2 transition-all">
             <NewNote
               setNewNote={setNewNote}
-              noteBodyValue={inputValue.noteBodyValue}
-              noteTitleValue={inputValue.noteTitleValue}
+              noteBodyValue={inputValue.noteBody}
+              noteTitleValue={inputValue.noteTitle}
               handleInputChange={handleInputChange}
+              handleAddNote={handleAddNote}
             />
           </div>
         )}
