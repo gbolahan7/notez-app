@@ -11,11 +11,16 @@ const NewNote = () => {
     inputValue,
     setInputValue,
     setEditNote,
+    editNote,
   } = useContext(LayoutContext) as LayoutProvider;
+
+  let newNoteTitle = "New note";
+  if (editNote.isEdit)
+    newNoteTitle = `${editNote.note.noteTitle} - Created ${editNote.note.createdAt}`;
   return (
     <div className="w-full flex flex-col">
       <h1 className="text-[22px] leading-[27px] text-black font-bold mb-[27px]">
-        New note
+        {newNoteTitle}
       </h1>
       <form className="flex flex-col" onSubmit={handleAddNote}>
         <div className="flex flex-col gap-4">

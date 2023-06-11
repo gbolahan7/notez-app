@@ -10,7 +10,7 @@ interface Props {
 }
 
 function Card({ note }: Props) {
-  const { setNotes, setCreateNote, setEditNote } = useContext(
+  const { setNotes, setCreateNote, setEditNote, setInputValue } = useContext(
     LayoutContext
   ) as LayoutProvider;
   const [confirmation, setConfirmation] = useState(false);
@@ -28,6 +28,13 @@ function Card({ note }: Props) {
 
   const handleEditNote = () => {
     setEditNote({ isEdit: true, note: note });
+
+    //populate text area on edit
+    setInputValue((prevState) => ({
+      ...prevState,
+      noteTitle: note.noteTitle,
+      noteBody: note.noteBody,
+    }));
   };
 
   return (

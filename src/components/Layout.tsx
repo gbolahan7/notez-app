@@ -106,7 +106,24 @@ const Layout = () => {
       noteBody: "",
     }));
 
-    setNotes((prevState) => [...prevState, noteData]);
+    // update note card
+    setNotes((prevState) => {
+      const {
+        isEdit,
+        note: { id },
+      } = editNote;
+      const { noteTitle, noteBody } = inputValue;
+
+      if (isEdit) {
+        const noteIndex = prevState.findIndex((note) => note.id === id);
+        prevState[noteIndex].noteTitle = noteTitle;
+        prevState[noteIndex].noteBody = noteBody;
+
+        return [...prevState];
+      }
+
+      return [...prevState, noteData];
+    });
   };
 
   // setting the state
