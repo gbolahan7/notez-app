@@ -49,7 +49,15 @@ const Layout = () => {
     noteTitle: " ",
   });
   const [newNote, setNewNote] = useState(false);
+
+  // filtering
+
   const [notes, setNotes] = useState<Note[]>([]); //managing the state of an array of notes
+
+  let filteredNotes = [...notes]; // not mutating the state
+  filteredNotes = filteredNotes.filter((note) =>
+    note.noteTitle.toLowerCase().includes(inputValue.queryString.toLowerCase())
+  ); //filtering notes by title
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -116,7 +124,7 @@ const Layout = () => {
     newNote: newNote,
     setInputValue: setInputValue,
     setNewNote: setNewNote,
-    notes: notes,
+    notes: filteredNotes,
     setNotes: setNotes,
   };
   return (
