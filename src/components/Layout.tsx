@@ -4,6 +4,8 @@ import {
   FormEvent,
   SetStateAction,
   createContext,
+  useEffect,
+  useRef,
   useState,
 } from "react";
 import CardLayout from "./card/CardLayout";
@@ -87,6 +89,26 @@ const Layout = () => {
     setNotes((prevState) => [...prevState, noteData]);
   };
 
+  // setting the state
+
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    if (mounted.current) {
+      sessionStorage.setItem("notes", JSON.stringify(notes));
+    }
+  }, [notes]);
+  useEffect(() => {
+    mounted.current = true;
+    const getSavedNotes = sessionStorage.getItem("notes");
+    if (getSavedNotes !== null) {
+      setNotes(JSON.parse(getSavedNotes));
+    }
+
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
   const layoutContextProvider = {
     handleInputChange: handleInputChange,
     handleAddNote: handleAddNote,
