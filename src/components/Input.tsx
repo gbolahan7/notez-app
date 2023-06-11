@@ -51,7 +51,7 @@ function Input({
       ) : (
         <div>
           <textarea
-            className="w-full h-[392px] outline-none"
+            className="w-full h-[392px] outline-none text-notez-grey-100"
             placeholder={placeholder}
             value={value}
             onChange={onChange}

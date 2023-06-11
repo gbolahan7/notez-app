@@ -10,7 +10,9 @@ interface Props {
 }
 
 function Card({ note }: Props) {
-  const { setNotes, setNewNote } = useContext(LayoutContext) as LayoutProvider;
+  const { setNotes, setCreateNote, setEditNote } = useContext(
+    LayoutContext
+  ) as LayoutProvider;
   const [confirmation, setConfirmation] = useState(false);
   const [noteId, setNoteId] = useState("");
 
@@ -18,17 +20,20 @@ function Card({ note }: Props) {
   const iconStyle =
     "fill-notez-grey-100 hover:fill-notez-yellow-200 cursor-pointer flex flex-col";
 
-  const createdAtDate = formatDateTime(createdAt);
-
   const handleDeleteNote = (noteId: string) => {
     setNotes((currentState) =>
       currentState.filter((note) => note.id !== noteId)
     );
   };
+
+  const handleEditNote = () => {
+    setEditNote({ isEdit: true, note: note });
+  };
+
   return (
     <div className="bg-white rounded-md shadow-lg pt-[22px] pb-2 pl-4 pr-5 flex flex-col w-full relative h-[180px]">
       <div className="flex items-center gap-1 self-end mb-5">
-        <FaExpandAlt className={iconStyle} onClick={() => setNewNote(true)} />
+        <FaExpandAlt className={iconStyle} onClick={handleEditNote} />
         <FaTrashAlt
           className={iconStyle}
           onClick={() => {
@@ -42,7 +47,7 @@ function Card({ note }: Props) {
         {notePreview}
       </p>
       <p className="text-[10px] leading-3 text-notez-grey-100 mt-auto">
-        {createdAtDate}
+        {createdAt}
       </p>
       {confirmation && noteId === id && (
         <div

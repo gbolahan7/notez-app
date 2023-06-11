@@ -12,7 +12,7 @@ import CardLayout from "./card/CardLayout";
 import NewNote from "./NewNote";
 import clsx from "clsx";
 import Header from "./Header";
-import { truncateText } from "./util";
+import { formatDateTime, truncateText } from "./util";
 
 export interface InputValue {
   queryString: string;
@@ -24,18 +24,25 @@ export interface Note {
   id: string;
   noteTitle: string;
   noteBody: string;
-  createdAt: Date | number;
+  createdAt: string;
   notePreview: string;
+}
+
+export interface EditNote {
+  isEdit: boolean;
+  note: Pick<Note, "createdAt" | "id" | "noteBody" | "noteTitle">;
 }
 
 export interface LayoutProvider {
   notes: Note[];
-  newNote: boolean;
+  editNote: EditNote;
+  createNote: boolean;
   inputValue: InputValue;
   setInputValue: Dispatch<SetStateAction<InputValue>>;
   setNotes: Dispatch<SetStateAction<Note[]>>;
-  setNewNote: (value: boolean) => void;
+  setCreateNote: (value: boolean) => void;
   handleAddNote: (event: FormEvent<HTMLElement>) => void;
+  setEditNote: Dispatch<SetStateAction<EditNote>>;
   handleInputChange: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
@@ -48,16 +55,21 @@ const Layout = () => {
     noteBody: "",
     noteTitle: " ",
   });
-  const [newNote, setNewNote] = useState(false);
-
-  // filtering
+  const [createNote, setCreateNote] = useState(false);
 
   const [notes, setNotes] = useState<Note[]>([]); //managing the state of an array of notes
+  //edit note state
+  const [editNote, setEditNote] = useState({
+    isEdit: false,
+    note: { noteTitle: "", noteBody: "", createdAt: "", id: "" },
+  });
 
+  // filtering
   let filteredNotes = [...notes]; // not mutating the state
   filteredNotes = filteredNotes.filter((note) =>
     note.noteTitle.toLowerCase().includes(inputValue.queryString.toLowerCase())
   ); //filtering notes by title
+
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -83,7 +95,7 @@ const Layout = () => {
       id: Math.random().toString(36).substring(2, 7).toUpperCase(),
       noteTitle: inputValue.noteTitle,
       noteBody: inputValue.noteBody,
-      createdAt: new Date(Date.now()).getTime(),
+      createdAt: formatDateTime(new Date(Date.now()).getTime()),
       notePreview: truncateText(inputValue.noteBody, 20),
     };
 
@@ -121,12 +133,16 @@ const Layout = () => {
     handleInputChange: handleInputChange,
     handleAddNote: handleAddNote,
     inputValue: inputValue,
-    newNote: newNote,
+    createNote: createNote,
     setInputValue: setInputValue,
-    setNewNote: setNewNote,
+    setCreateNote: setCreateNote,
     notes: filteredNotes,
     setNotes: setNotes,
+    editNote: editNote,
+    setEditNote: setEditNote,
   };
+
+  const isCreateNoteOpen = createNote || editNote.isEdit;
   return (
     <LayoutContext.Provider value={layoutContextProvider}>
       <section className="w-full py-[61px] px-[67px] flex flex-col">
@@ -134,8 +150,13 @@ const Layout = () => {
           <Header />
         </div>
         <div className="relative flex gap-8">
-          <div className={clsx("transition-all", newNote ? "w-1/2" : "w-full")}>
-            {newNote && (
+          <div
+            className={clsx(
+              "transition-all",
+              isCreateNoteOpen ? "w-1/2" : "w-full"
+            )}
+          >
+            {createNote && (
               <h1 className="text-[22px] leading-[27px] mb-[27px] text-black font-bold">
                 Saved notes
               </h1>
@@ -143,7 +164,7 @@ const Layout = () => {
             <CardLayout />
           </div>
 
-          {newNote && (
+          {isCreateNoteOpen && (
             <div className="w-1/2 transition-all">
               <NewNote />
             </div>

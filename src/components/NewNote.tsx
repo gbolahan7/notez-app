@@ -5,11 +5,12 @@ import { LayoutContext, LayoutProvider } from "./Layout";
 
 const NewNote = () => {
   const {
-    setNewNote,
+    setCreateNote,
     handleInputChange,
     handleAddNote,
     inputValue,
     setInputValue,
+    setEditNote,
   } = useContext(LayoutContext) as LayoutProvider;
   return (
     <div className="w-full flex flex-col">
@@ -50,7 +51,11 @@ const NewNote = () => {
             btnVariant="secondary"
             size="medium"
             onClick={() => {
-              setNewNote(false);
+              setCreateNote(false);
+              setEditNote({
+                isEdit: false,
+                note: { createdAt: "", id: "", noteBody: "", noteTitle: "" },
+              });
               setInputValue((prevState) => ({
                 ...prevState,
                 noteTitle: "",

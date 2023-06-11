@@ -4,7 +4,7 @@ import Input from "./Input";
 import Layout, { LayoutContext, LayoutProvider } from "./Layout";
 
 function Header() {
-  const { inputValue, setNewNote, handleInputChange } = useContext(
+  const { inputValue, setCreateNote, handleInputChange } = useContext(
     LayoutContext
   ) as LayoutProvider;
 
@@ -14,7 +14,7 @@ function Header() {
         btnVariant="primary"
         size="large"
         text="new note"
-        onClick={() => setNewNote(true)}
+        onClick={() => setCreateNote(true)}
       ></Button>
       <h1 className="text-[55px] font-bold leading-[67px] -tracking-(0.08em) text-black">
         notez

@@ -4,13 +4,13 @@ import { LayoutContext, LayoutProvider, Note } from "../Layout";
 import clsx from "clsx";
 
 interface Props {
-  setNewNote: (value: boolean) => void;
+  setCreateNote: (value: boolean) => void;
   newNote: boolean;
   notes: Note[];
 }
 
 function CardLayout() {
-  const { notes, newNote } = useContext(LayoutContext) as LayoutProvider;
+  const { notes, createNote } = useContext(LayoutContext) as LayoutProvider;
 
   return (
     <div className="relative h-full">
@@ -26,7 +26,7 @@ function CardLayout() {
         <h1
           className={clsx(
             "text-lg text-black font-normal",
-            newNote ? "text-left" : "text-center"
+            createNote ? "text-left" : "text-center"
           )}
         >
           No note found, please add a new Note.
